@@ -54,6 +54,58 @@ app.delete('/explorers/:id', async (req, res) => {
 	return res.json({message: "Eliminado correctamente"});
 });
 
+//Endpoints para MC
+
+//GET
+app.get('/mc', async (req, res) => {
+  const allMc =  await prisma.MC.findMany({});
+  res.json(allMc);
+});
+
+app.get('/mc/:id', async (req, res) => {
+  const id = req.params.id;
+  const mc = await prisma.MC.findUnique({where: {id: parseInt(id)}});
+  res.json(mc);
+});
+
+//POST
+app.post('/mc', async (req, res) => {
+  const explorer = {
+    name: req.body.name,
+    lang: req.body.lang,
+    missionCommander: req.body.missionCommander,
+    enrollments:req.body.enrollments
+
+   };
+  const message = 'Explorer creado.';
+  await prisma.MC.create({data: explorer});
+  return res.json({message});
+});
+
+//PUT
+app.put('/mc/:id', async (req, res) => {
+	const id = parseInt(req.params.id);
+
+	await prisma.MC.update({
+		where: {
+			id: id
+		},
+		data: {
+			mission: req.body.hasCertification
+		}
+	})
+
+	return res.json({message: "Actualizado correctamente"});
+});
+//DELETE
+app.delete('/explorers/:id', async (req, res) => {
+	const id = parseInt(req.params.id);
+	await prisma.MC.delete({where: {id: id}});
+	return res.json({message: "Eliminado correctamente"});
+});
+
+
+
 app.listen(port, () => {
   console.log(`Listening to requests on port ${port}`);
 });
