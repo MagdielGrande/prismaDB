@@ -70,7 +70,38 @@ const prisma = new PrismaClient();
         },
       });
 
-     
+      const MC1 = await prisma.MC.upsert({
+        where: { name: 'AJO 1' },
+        update: {},
+        create: {
+          name: 'AJO 1',
+          lang: 'Español',
+          missionCommander: 'Node',
+          enrollments: 3
+        },
+      });
+
+      const MC2 = await prisma.MC.upsert({
+        where: { name: 'AJO 2' },
+        update: {},
+        create: {
+          name: 'AJO 2',
+          lang: 'Español',
+          missionCommander: 'Node',
+          enrollments: 2
+        },
+      });
+      
+      const MC3 = await prisma.MC.upsert({
+        where: { name: 'AJO 3' },
+        update: {},
+        create: {
+          name: 'AJO 3',
+          lang: 'Español',
+          missionCommander: 'Java',
+          enrollments: 9
+        },
+      });
 
     console.log('Create 3 explorers');
   } catch(e) {
